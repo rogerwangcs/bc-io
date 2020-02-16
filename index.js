@@ -15,8 +15,7 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 let gameServer = {
-  players: {},
-  test: "asd"
+  players: {}
 };
 
 class Player {
@@ -41,15 +40,6 @@ const logServerState = message => {
   console.log("======================");
 };
 
-const playerQuit = socketId => {
-  Object.keys(gameServer.players).forEach(player => {
-    if (gameServer.players.indexOf(socketId) != -1) {
-      delete gameServer.players[player.id];
-    }
-  });
-  logServerState("Client " + socketId.substring(0, 10) + " left.");
-};
-
 const addPlayer = (socketId, playerName) => {
   let xPos = Math.floor(Math.random() * 500);
   let yPos = Math.floor(Math.random() * 500);
@@ -64,6 +54,12 @@ const addPlayer = (socketId, playerName) => {
   );
 };
 
+const playerQuit = socketId => {
+  delete gameServer.players[socketId];
+  logServerState("Client " + socketId.substring(0, 10) + " left.");
+  io.emit("updateState", gameServer);
+};
+
 // Start socket listening
 io.on("connection", socket => {
   let playerName = socket.handshake.query.name;
@@ -71,7 +67,11 @@ io.on("connection", socket => {
   logServerState("Client " + socket.id.substring(0, 10) + " joined.");
 
   socket.on("clientGameState", () => {
-    io.to(`${socket.id}`).emit("serverGameState", gameServer);
+    io.emit("updateState", gameServer);
+  });
+
+  socket.on("updateState", () => {
+    io.emit("updateState", gameServer);
   });
 
   socket.on("disconnect", () => {

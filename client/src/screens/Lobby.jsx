@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { withRouter } from "react-router";
 
 const SLobby = styled.div`
   width: 100vw;
@@ -65,17 +64,18 @@ class Lobby extends Component {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <form onSubmit={this.enterGame}>
-              <input
-                value={this.state.name}
-                onChange={this.onInput}
-                placeholder="Your name"
-                style={{ fontSize: "36px" }}
-              ></input>
-              <button style={{ fontSize: "36px" }} type="submit">
-                Play
-              </button>
-            </form>
+            <input
+              value={this.state.name}
+              onChange={this.onInput}
+              placeholder="Your name"
+              style={{ fontSize: "36px" }}
+            ></input>
+            <button
+              style={{ fontSize: "36px" }}
+              onClick={() => this.enterGame()}
+            >
+              Play
+            </button>
           </React.Fragment>
         )}
       </SLobby>
@@ -83,4 +83,4 @@ class Lobby extends Component {
   }
 }
 
-export default withRouter(Lobby);
+export default Lobby;

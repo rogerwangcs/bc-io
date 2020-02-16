@@ -1,11 +1,25 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import io from "socket.io-client";
 
 import Lobby from "./Lobby.jsx";
+import Player from "../components/Player";
 
 // const socketUrl = "https://localhost:" + process.env.PORT || 4000;
 const socketUrl = "http://localhost:4000/";
+
+const SGameContainer = styled.div`
+  width: 1000px;
+  height: 1000px;
+
+  background: rgb(58, 55, 87);
+  background: radial-gradient(
+    circle,
+    rgba(58, 55, 87, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+`;
 
 class GameContainer extends Component {
   constructor(props) {
@@ -30,7 +44,7 @@ class GameContainer extends Component {
       () => {
         setTimeout(() => {
           this.activateSockets(playerName);
-        }, 300);
+        }, 50);
       }
     );
   };
@@ -49,6 +63,12 @@ class GameContainer extends Component {
         }
       );
     });
+
+    this.state.socket.on("updateState", gameState => {
+      this.setState({
+        gameState: gameState
+      });
+    });
   };
 
   componentWillUnmount = () => {
@@ -58,10 +78,20 @@ class GameContainer extends Component {
   };
 
   render() {
-    if (this.state.socket === null) {
+    if (this.state.gameState == null) {
       return <Lobby joinServer={this.joinServer} setName={this.setName} />;
     }
-    return <GameContainer>{this.state.gameState}</GameContainer>;
+
+    const players = Object.keys(this.state.gameState.players).map(playerId => {
+      return (
+        <Player
+          key={playerId}
+          player={this.state.gameState.players[playerId]}
+        />
+      );
+    });
+
+    return <SGameContainer>{players}</SGameContainer>;
   }
 }
 
