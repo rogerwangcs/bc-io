@@ -8,9 +8,10 @@ import { Joystick } from "react-joystick-component";
 import Lobby from "./Lobby.jsx";
 import Player from "../components/Player";
 
-const socketUrl = "https://localhost:" + process.env.PORT || 4000;
+// const socketUrl = "https://localhost:" + process.env.PORT || 4000;
 // const socketUrl = "http://localhost:4000/";
 // const socketUrl = "136.167.87.51:4000/";
+const socketUrl = "https://bc-io.herokuapp.com/";
 
 const SGameContainer = styled.div`
   width: 370px;
