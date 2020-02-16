@@ -1,10 +1,11 @@
 {
-  "name": "dijkstras-arena-client",
+  "name": "bc-io-client",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-joystick-component": "^1.4.0",
     "react-particles-js": "^2.7.0",
     "react-scripts": "3.2.0",
     "socket.io-client": "^2.3.0"

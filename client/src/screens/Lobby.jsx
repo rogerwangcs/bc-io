@@ -16,6 +16,10 @@ const SLobby = styled.div`
     font-size: 2em;
     margin: 100px;
   }
+
+  .input {
+    width: 100px;
+  }
 `;
 
 class Lobby extends Component {

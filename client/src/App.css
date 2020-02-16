@@ -1,7 +1,9 @@
 html,
 body {
   margin: 0px;
+  overflow: hidden;
   background-color: rgb(35, 35, 35);
+  user-select: none;
 }
 .App {
   font-family: sans-serif;
